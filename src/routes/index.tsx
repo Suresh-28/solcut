@@ -452,9 +452,9 @@ function Contact() {
         <Reveal>
           <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground mb-8">[ Let's talk ]</p>
         </Reveal>
-        <h2 className="font-display text-[14vw] md:text-[11vw] leading-[0.85] text-balance">
+        <h2 className="font-display text-[14vw] md:text-[11vw] leading-[0.95] text-balance">
           {["Got something", "worth making?"].map((line, i) => (
-            <span key={i} className="block overflow-hidden">
+            <span key={i} className="block overflow-hidden pb-[0.12em]">
               <motion.span
                 initial={{ y: "110%" }}
                 whileInView={{ y: 0 }}
