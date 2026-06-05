@@ -236,7 +236,7 @@ function Marquee() {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const x = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
-  const items = ["Identity", "★", "Motion", "★", "Digital", "★", "Strategy", "★", "Art Direction", "★"];
+  const items = ["Landing pages", "✦", "Brand sites", "✦", "E-commerce", "✦", "Web apps", "✦", "SEO", "✦", "Performance", "✦", "Animation", "✦", "CMS", "✦"];
   return (
     <div ref={ref} className="border-y border-border py-6 overflow-hidden bg-background">
       <div className="flex animate-marquee whitespace-nowrap">
