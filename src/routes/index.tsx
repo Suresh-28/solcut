@@ -448,24 +448,24 @@ function Testimonials({ testimonials }: { testimonials: SiteContent["testimonial
   );
 }
 
-function Contact() {
+function Contact({ contact }: { contact: SiteContent["contact"] }) {
   const ref = useRef<HTMLDivElement>(null);
   return (
     <section id="contact" className="relative px-6 md:px-10 py-32 md:py-48 border-t border-border overflow-hidden">
       <div className="absolute -top-32 -right-32 w-[40rem] h-[40rem] rounded-full bg-accent/20 blur-3xl animate-blob" />
       <div className="relative">
         <Reveal>
-          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground mb-8">[ Let's talk ]</p>
+          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground mb-8">{contact.eyebrow}</p>
         </Reveal>
         <h2 className="font-display text-[14vw] md:text-[11vw] leading-[0.95] text-balance">
-          {["Let's build something", "worth visiting."].map((line, i) => (
+          {contact.headlineLines.map((line, i) => (
             <span key={i} className="block overflow-hidden pb-[0.12em]">
               <motion.span
                 initial={{ y: "110%" }}
                 whileInView={{ y: 0 }}
                 viewport={{ once: true, margin: "-20% 0px" }}
                 transition={{ duration: 1.1, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
-                className={`block ${i === 1 ? "text-accent italic" : ""}`}
+                className={`block ${i === contact.headlineLines.length - 1 ? "text-accent italic" : ""}`}
               >
                 {line}
               </motion.span>
@@ -474,12 +474,12 @@ function Contact() {
         </h2>
         <Reveal>
           <p className="mt-8 max-w-xl text-foreground/70 text-lg">
-            Replies within 24h. Tell us about the project, or email us directly.
+            {contact.note}
           </p>
         </Reveal>
         <Reveal delay={0.3}>
           <div ref={ref} className="mt-12 flex flex-wrap items-center gap-6">
-            <MagneticCTA />
+            <MagneticCTA email={contact.email} />
             <a href="#" className="text-sm uppercase tracking-wider text-muted-foreground hover:text-accent">Book a call →</a>
           </div>
         </Reveal>
@@ -488,14 +488,14 @@ function Contact() {
   );
 }
 
-function MagneticCTA() {
+function MagneticCTA({ email }: { email: string }) {
   const ref = useRef<HTMLAnchorElement>(null);
   const x = useSpring(0, { stiffness: 200, damping: 15 });
   const y = useSpring(0, { stiffness: 200, damping: 15 });
   return (
     <motion.a
       ref={ref}
-      href="mailto:connect.shyamala@gmail.com"
+      href={`mailto:${email}`}
       style={{ x, y }}
       onMouseMove={(e) => {
         const r = ref.current!.getBoundingClientRect();
@@ -505,24 +505,24 @@ function MagneticCTA() {
       onMouseLeave={() => { x.set(0); y.set(0); }}
       className="group inline-flex items-center gap-4 bg-accent text-accent-foreground rounded-full pl-7 pr-3 py-3 text-lg font-medium normal-case tracking-wide hover:gap-6 transition-[gap]"
     >
-      connect.shyamala@gmail.com
+      {email}
       <motion.span whileHover={{ rotate: 45 }} className="w-10 h-10 rounded-full bg-background text-foreground grid place-items-center">→</motion.span>
     </motion.a>
   );
 }
 
-function Footer({ time }: { time: string }) {
+function Footer({ time, footer, contact }: { time: string; footer: SiteContent["footer"]; contact: SiteContent["contact"] }) {
   return (
     <footer className="border-t border-border px-6 md:px-10 py-10">
       <div className="grid md:grid-cols-4 gap-8 text-sm text-muted-foreground">
         <div>
           <div className="font-display text-foreground text-xl">SOLCUT®</div>
-          <p className="mt-3">Independent web studio · Est. 2026</p>
+          <p className="mt-3">{footer.tagline}</p>
         </div>
         <div>
           <div className="uppercase tracking-wider text-foreground/70 mb-3">Contact</div>
-          <p><a className="hover:text-accent" href="mailto:connect.shyamala@gmail.com">connect.shyamala@gmail.com</a></p>
-          <p className="mt-1">Replies within 24h</p>
+          <p><a className="hover:text-accent" href={`mailto:${contact.email}`}>{contact.email}</a></p>
+          <p className="mt-1">{footer.note}</p>
         </div>
         <div>
           <div className="uppercase tracking-wider text-foreground/70 mb-3">Sitemap</div>
