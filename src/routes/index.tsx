@@ -27,17 +27,23 @@ export const Route = createFileRoute("/")({
 });
 
 const projects = [
-  { n: "01", title: "Vexa Studios", tag: "Identity / Motion", year: "2025", img: work1 },
-  { n: "02", title: "Acidwave", tag: "Brand / Web", year: "2025", img: work2 },
-  { n: "03", title: "Monolith&Co", tag: "Art Direction", year: "2024", img: work3 },
-  { n: "04", title: "Orbit Labs", tag: "Product / Identity", year: "2024", img: work4 },
+  { n: "01", title: "Northwind Capital", tag: "Financial advisory", year: "2025", img: work1 },
+  { n: "02", title: "Field & Foundry", tag: "Furniture studio", year: "2025", img: work2 },
+  { n: "03", title: "Tertia Labs", tag: "Developer tooling", year: "2024", img: work3 },
+  { n: "04", title: "Marin & Co.", tag: "Brand / Web", year: "2024", img: work4 },
 ];
 
 const services = [
-  { k: "01", t: "Brand Identity", d: "Logos, visual systems and guidelines that hold up under pressure." },
-  { k: "02", t: "Digital Product", d: "Interfaces, websites and apps engineered for clarity and craft." },
-  { k: "03", t: "Motion & Direction", d: "Animation, art direction and campaign systems that move." },
-  { k: "04", t: "Strategy", d: "Naming, positioning and messaging anchored in a real point of view." },
+  { k: "01", t: "Discovery", d: "We map your customer, your offer, and the proof points that already convert in conversation." },
+  { k: "02", t: "Design", d: "Minimal layouts, opinionated typography, no template tells. Every section earns its place." },
+  { k: "03", t: "Build", d: "Hand-coded with modern stacks. 95+ Lighthouse, accessible by default, edited without us." },
+  { k: "04", t: "Iterate", d: "We ship in two weeks then watch the data. Headlines, sections, and flows tuned in public." },
+];
+
+const testimonials = [
+  { q: "Solcut turned a two-month redesign into a two-week one — and the inbound finally matches the room.", a: "Hema Rao", r: "Partner, Northwind Capital" },
+  { q: "Our customers said the site felt like the studio. That's the highest compliment.", a: "Marin Idris", r: "Founder, Field & Foundry" },
+  { q: "Fast, opinionated, and the only studio I've worked with that ships on the date they quote.", a: "Jordan Lee", r: "CEO, Tertia Labs" },
 ];
 
 function Index() {
@@ -70,6 +76,7 @@ function Index() {
       <Work />
       <About />
       <Services />
+      <Testimonials />
       <Contact />
       <Footer time={time} />
     </main>
@@ -150,7 +157,7 @@ function Hero() {
   const titleY = useTransform(scrollYProgress, [0, 1], [0, -120]);
   const fade = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
-  const headline = ["We build", "brands that", "cut through."];
+  const headline = ["We build", "websites that", "win contracts."];
 
   return (
     <section id="top" ref={ref} className="relative min-h-[100vh] overflow-hidden grain">
@@ -171,7 +178,7 @@ function Hero() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-xs uppercase tracking-[0.25em] text-muted-foreground mb-8"
         >
-          [ Independent design studio — est. 2019 ]
+          [ Independent web studio — est. 2026 ]
         </motion.p>
         <h1 className="font-display text-foreground text-[18vw] md:text-[14vw] leading-[0.82]">
           {headline.map((line, li) => (
@@ -180,11 +187,11 @@ function Hero() {
                 initial={{ y: "110%" }}
                 animate={{ y: 0 }}
                 transition={{ duration: 1.1, delay: 0.3 + li * 0.12, ease: [0.22, 1, 0.36, 1] }}
-                className={`block ${li === 2 ? "text-accent" : ""}`}
+                className={`block ${li === 2 ? "text-accent italic" : ""}`}
               >
                 {li === 1 ? (
                   <span className="inline-flex items-center gap-4 md:gap-8">
-                    brands
+                    websites
                     <motion.span
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
@@ -205,8 +212,9 @@ function Hero() {
           className="mt-12 grid md:grid-cols-3 gap-6 max-w-5xl"
         >
           <p className="md:col-span-2 text-lg md:text-xl text-foreground/80 max-w-2xl text-balance">
-            Solcut is a small, focused studio. We make identity, motion and digital products for ambitious teams who refuse to look like everyone else.
+            Solcut is a small team designing and shipping fast, minimal websites for founders and studios who treat their landing page like a sales engineer.
           </p>
+
           <div className="flex items-end justify-start md:justify-end">
             <a href="#work" className="group inline-flex items-center gap-3 text-sm uppercase tracking-wider">
               <motion.span
@@ -229,7 +237,7 @@ function Marquee() {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const x = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
-  const items = ["Identity", "★", "Motion", "★", "Digital", "★", "Strategy", "★", "Art Direction", "★"];
+  const items = ["Landing pages", "✦", "Brand sites", "✦", "E-commerce", "✦", "Web apps", "✦", "SEO", "✦", "Performance", "✦", "Animation", "✦", "CMS", "✦"];
   return (
     <div ref={ref} className="border-y border-border py-6 overflow-hidden bg-background">
       <div className="flex animate-marquee whitespace-nowrap">
@@ -252,8 +260,8 @@ function Work() {
     <section id="work" className="px-6 md:px-10 py-24 md:py-32">
       <div className="flex items-end justify-between mb-16">
         <Reveal>
-          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground mb-4">[ Selected — 2024 / 25 ]</p>
-          <h2 className="font-display text-5xl md:text-7xl">Work,<br />in the wild.</h2>
+          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground mb-4">[ Selected work ]</p>
+          <h2 className="font-display text-5xl md:text-7xl">Brands we've<br /><span className="italic text-accent">put online</span>.</h2>
         </Reveal>
         <Reveal delay={0.2}>
           <a href="#contact" className="hidden md:inline text-sm uppercase tracking-wider text-muted-foreground hover:text-accent">All projects →</a>
@@ -335,19 +343,19 @@ function About() {
     <section id="about" className="px-6 md:px-10 py-24 md:py-32 border-t border-border">
       <div className="grid md:grid-cols-12 gap-8">
         <Reveal className="md:col-span-3">
-          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">[ The Studio ]</p>
+          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">[ Studio note ]</p>
         </Reveal>
         <div className="md:col-span-9">
           <Reveal>
             <p className="font-display text-3xl md:text-6xl leading-[1.05] text-balance">
-              A studio of six. No account managers, no decks for the sake of decks. We sit close to the work and ship things we'd put on our own walls — <span className="text-accent">obsession over scale.</span>
+              A website is the only employee that works while you sleep — <span className="text-accent italic">ours show up rested.</span> Most agencies disappear for two months. We commit to a fixed timeline and ship something you can put in front of a customer by Friday week two.
             </p>
           </Reveal>
           <RevealStagger className="grid sm:grid-cols-3 gap-8 mt-20">
             {[
-              { k: "06", l: "People in the studio" },
-              { k: "42", l: "Brands shaped since 2019" },
-              { k: "11", l: "Time zones, one Slack" },
+              { k: "02", l: "Weeks to ship, end to end" },
+              { k: "95", l: "Lighthouse score, baseline" },
+              { k: "24", l: "Hour reply window" },
             ].map((s) => (
               <motion.div
                 key={s.k}
@@ -394,10 +402,10 @@ function Services() {
     <section id="services" className="px-6 md:px-10 py-24 md:py-32 border-t border-border">
       <div className="grid md:grid-cols-12 gap-8 mb-16">
         <Reveal className="md:col-span-3">
-          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">[ What we do ]</p>
+          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">[ Process ]</p>
         </Reveal>
         <Reveal className="md:col-span-9">
-          <h2 className="font-display text-5xl md:text-7xl">Capabilities.</h2>
+          <h2 className="font-display text-5xl md:text-7xl">Four steps,<br /><span className="italic text-accent">two weeks</span>.</h2>
         </Reveal>
       </div>
       <ul>
@@ -443,6 +451,40 @@ function ServiceRow({ s, i }: { s: typeof services[number]; i: number }) {
   );
 }
 
+function Testimonials() {
+  return (
+    <section className="px-6 md:px-10 py-24 md:py-32 border-t border-border">
+      <div className="grid md:grid-cols-12 gap-8 mb-16">
+        <Reveal className="md:col-span-3">
+          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">[ Testimonials ]</p>
+        </Reveal>
+        <Reveal className="md:col-span-9">
+          <h2 className="font-display text-5xl md:text-7xl">What clients<br /><span className="italic text-accent">say</span>.</h2>
+        </Reveal>
+      </div>
+      <RevealStagger className="grid md:grid-cols-3 gap-8">
+        {testimonials.map((t) => (
+          <motion.figure
+            key={t.a}
+            variants={{
+              hidden: { opacity: 0, y: 40 },
+              show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
+            }}
+            className="border-t border-border pt-6"
+          >
+            <blockquote className="font-display text-xl md:text-2xl leading-snug text-foreground/90">
+              "{t.q}"
+            </blockquote>
+            <figcaption className="mt-6 text-sm uppercase tracking-wider text-muted-foreground">
+              <span className="text-foreground">{t.a}</span> · {t.r}
+            </figcaption>
+          </motion.figure>
+        ))}
+      </RevealStagger>
+    </section>
+  );
+}
+
 function Contact() {
   const ref = useRef<HTMLDivElement>(null);
   return (
@@ -453,7 +495,7 @@ function Contact() {
           <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground mb-8">[ Let's talk ]</p>
         </Reveal>
         <h2 className="font-display text-[14vw] md:text-[11vw] leading-[0.95] text-balance">
-          {["Got something", "worth making?"].map((line, i) => (
+          {["Let's build something", "worth visiting."].map((line, i) => (
             <span key={i} className="block overflow-hidden pb-[0.12em]">
               <motion.span
                 initial={{ y: "110%" }}
@@ -467,6 +509,11 @@ function Contact() {
             </span>
           ))}
         </h2>
+        <Reveal>
+          <p className="mt-8 max-w-xl text-foreground/70 text-lg">
+            Replies within 24h. Tell us about the project, or email us directly.
+          </p>
+        </Reveal>
         <Reveal delay={0.3}>
           <div ref={ref} className="mt-12 flex flex-wrap items-center gap-6">
             <MagneticCTA />
@@ -485,7 +532,7 @@ function MagneticCTA() {
   return (
     <motion.a
       ref={ref}
-      href="mailto:hello@solcut.studio"
+      href="mailto:connect.shyamala@gmail.com"
       style={{ x, y }}
       onMouseMove={(e) => {
         const r = ref.current!.getBoundingClientRect();
@@ -493,9 +540,9 @@ function MagneticCTA() {
         y.set((e.clientY - (r.top + r.height / 2)) * 0.25);
       }}
       onMouseLeave={() => { x.set(0); y.set(0); }}
-      className="group inline-flex items-center gap-4 bg-accent text-accent-foreground rounded-full pl-7 pr-3 py-3 text-lg font-medium uppercase tracking-wider hover:gap-6 transition-[gap]"
+      className="group inline-flex items-center gap-4 bg-accent text-accent-foreground rounded-full pl-7 pr-3 py-3 text-lg font-medium normal-case tracking-wide hover:gap-6 transition-[gap]"
     >
-      hello@solcut.studio
+      connect.shyamala@gmail.com
       <motion.span whileHover={{ rotate: 45 }} className="w-10 h-10 rounded-full bg-background text-foreground grid place-items-center">→</motion.span>
     </motion.a>
   );
@@ -507,19 +554,19 @@ function Footer({ time }: { time: string }) {
       <div className="grid md:grid-cols-4 gap-8 text-sm text-muted-foreground">
         <div>
           <div className="font-display text-foreground text-xl">SOLCUT®</div>
-          <p className="mt-3">Lisbon · Berlin · Remote</p>
+          <p className="mt-3">Independent web studio · Est. 2026</p>
         </div>
         <div>
           <div className="uppercase tracking-wider text-foreground/70 mb-3">Contact</div>
-          <p>hello@solcut.studio</p>
-          <p>+351 920 000 000</p>
+          <p><a className="hover:text-accent" href="mailto:connect.shyamala@gmail.com">connect.shyamala@gmail.com</a></p>
+          <p className="mt-1">Replies within 24h</p>
         </div>
         <div>
-          <div className="uppercase tracking-wider text-foreground/70 mb-3">Social</div>
+          <div className="uppercase tracking-wider text-foreground/70 mb-3">Sitemap</div>
           <ul className="space-y-1">
-            <li><a className="hover:text-accent" href="#">Instagram</a></li>
-            <li><a className="hover:text-accent" href="#">Are.na</a></li>
-            <li><a className="hover:text-accent" href="#">LinkedIn</a></li>
+            <li><a className="hover:text-accent" href="#work">Work</a></li>
+            <li><a className="hover:text-accent" href="#services">Process</a></li>
+            <li><a className="hover:text-accent" href="#contact">Contact</a></li>
           </ul>
         </div>
         <div className="md:text-right">
