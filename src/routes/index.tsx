@@ -259,8 +259,8 @@ function Work() {
     <section id="work" className="px-6 md:px-10 py-24 md:py-32">
       <div className="flex items-end justify-between mb-16">
         <Reveal>
-          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground mb-4">[ Selected — 2024 / 25 ]</p>
-          <h2 className="font-display text-5xl md:text-7xl">Work,<br />in the wild.</h2>
+          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground mb-4">[ Selected work ]</p>
+          <h2 className="font-display text-5xl md:text-7xl">Brands we've<br /><span className="italic text-accent">put online</span>.</h2>
         </Reveal>
         <Reveal delay={0.2}>
           <a href="#contact" className="hidden md:inline text-sm uppercase tracking-wider text-muted-foreground hover:text-accent">All projects →</a>
