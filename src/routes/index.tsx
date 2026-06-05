@@ -156,7 +156,7 @@ function Hero() {
   const titleY = useTransform(scrollYProgress, [0, 1], [0, -120]);
   const fade = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
-  const headline = ["We build", "brands that", "cut through."];
+  const headline = ["We build", "websites that", "win contracts."];
 
   return (
     <section id="top" ref={ref} className="relative min-h-[100vh] overflow-hidden grain">
@@ -177,7 +177,7 @@ function Hero() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-xs uppercase tracking-[0.25em] text-muted-foreground mb-8"
         >
-          [ Independent design studio — est. 2019 ]
+          [ Independent web studio — est. 2026 ]
         </motion.p>
         <h1 className="font-display text-foreground text-[18vw] md:text-[14vw] leading-[0.82]">
           {headline.map((line, li) => (
@@ -186,11 +186,11 @@ function Hero() {
                 initial={{ y: "110%" }}
                 animate={{ y: 0 }}
                 transition={{ duration: 1.1, delay: 0.3 + li * 0.12, ease: [0.22, 1, 0.36, 1] }}
-                className={`block ${li === 2 ? "text-accent" : ""}`}
+                className={`block ${li === 2 ? "text-accent italic" : ""}`}
               >
                 {li === 1 ? (
                   <span className="inline-flex items-center gap-4 md:gap-8">
-                    brands
+                    websites
                     <motion.span
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
@@ -211,8 +211,9 @@ function Hero() {
           className="mt-12 grid md:grid-cols-3 gap-6 max-w-5xl"
         >
           <p className="md:col-span-2 text-lg md:text-xl text-foreground/80 max-w-2xl text-balance">
-            Solcut is a small, focused studio. We make identity, motion and digital products for ambitious teams who refuse to look like everyone else.
+            Solcut is a small team designing and shipping fast, minimal websites for founders and studios who treat their landing page like a sales engineer.
           </p>
+
           <div className="flex items-end justify-start md:justify-end">
             <a href="#work" className="group inline-flex items-center gap-3 text-sm uppercase tracking-wider">
               <motion.span
