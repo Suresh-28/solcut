@@ -451,6 +451,40 @@ function ServiceRow({ s, i }: { s: typeof services[number]; i: number }) {
   );
 }
 
+function Testimonials() {
+  return (
+    <section className="px-6 md:px-10 py-24 md:py-32 border-t border-border">
+      <div className="grid md:grid-cols-12 gap-8 mb-16">
+        <Reveal className="md:col-span-3">
+          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">[ Testimonials ]</p>
+        </Reveal>
+        <Reveal className="md:col-span-9">
+          <h2 className="font-display text-5xl md:text-7xl">What clients<br /><span className="italic text-accent">say</span>.</h2>
+        </Reveal>
+      </div>
+      <RevealStagger className="grid md:grid-cols-3 gap-8">
+        {testimonials.map((t) => (
+          <motion.figure
+            key={t.a}
+            variants={{
+              hidden: { opacity: 0, y: 40 },
+              show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
+            }}
+            className="border-t border-border pt-6"
+          >
+            <blockquote className="font-display text-xl md:text-2xl leading-snug text-foreground/90">
+              "{t.q}"
+            </blockquote>
+            <figcaption className="mt-6 text-sm uppercase tracking-wider text-muted-foreground">
+              <span className="text-foreground">{t.a}</span> · {t.r}
+            </figcaption>
+          </motion.figure>
+        ))}
+      </RevealStagger>
+    </section>
+  );
+}
+
 function Contact() {
   const ref = useRef<HTMLDivElement>(null);
   return (
