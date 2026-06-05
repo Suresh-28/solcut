@@ -78,14 +78,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "Solcut" },
+      { name: "description", content: "Mirror Site Creator builds exact replicas of existing websites, including design, content, and animations." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "Solcut" },
+      { property: "og:description", content: "Mirror Site Creator builds exact replicas of existing websites, including design, content, and animations." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Solcut" },
+      { name: "twitter:description", content: "Mirror Site Creator builds exact replicas of existing websites, including design, content, and animations." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/TOw3OtHhOSclMrokCij4totjSVw2/social-images/social-1780644092722-Untitled-3_(1).webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/TOw3OtHhOSclMrokCij4totjSVw2/social-images/social-1780644092722-Untitled-3_(1).webp" },
     ],
     links: [
       {
