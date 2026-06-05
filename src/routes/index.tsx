@@ -127,7 +127,7 @@ function Nav() {
   );
 }
 
-function Hero() {
+function Hero({ hero }: { hero: SiteContent["hero"] }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], [0, 220]);
@@ -135,7 +135,7 @@ function Hero() {
   const titleY = useTransform(scrollYProgress, [0, 1], [0, -120]);
   const fade = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
-  const headline = ["We build", "websites that", "win contracts."];
+  const headline = hero.headlineLines;
 
   return (
     <section id="top" ref={ref} className="relative min-h-[100vh] overflow-hidden grain">
@@ -156,7 +156,7 @@ function Hero() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-xs uppercase tracking-[0.25em] text-muted-foreground mb-8"
         >
-          [ Independent web studio — est. 2026 ]
+          {hero.eyebrow}
         </motion.p>
         <h1 className="font-display text-foreground text-[18vw] md:text-[14vw] leading-[0.82]">
           {headline.map((line, li) => (
@@ -165,20 +165,9 @@ function Hero() {
                 initial={{ y: "110%" }}
                 animate={{ y: 0 }}
                 transition={{ duration: 1.1, delay: 0.3 + li * 0.12, ease: [0.22, 1, 0.36, 1] }}
-                className={`block ${li === 2 ? "text-accent italic" : ""}`}
+                className={`block ${li === headline.length - 1 ? "text-accent italic" : ""}`}
               >
-                {li === 1 ? (
-                  <span className="inline-flex items-center gap-4 md:gap-8">
-                    websites
-                    <motion.span
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ delay: 1.2, type: "spring", stiffness: 200, damping: 12 }}
-                      className="inline-block w-[0.7em] h-[0.7em] rounded-full bg-accent align-middle"
-                    />
-                    that
-                  </span>
-                ) : line}
+                {line}
               </motion.span>
             </span>
           ))}
@@ -190,7 +179,7 @@ function Hero() {
           className="mt-12 grid md:grid-cols-3 gap-6 max-w-5xl"
         >
           <p className="md:col-span-2 text-lg md:text-xl text-foreground/80 max-w-2xl text-balance">
-            Solcut is a small team designing and shipping fast, minimal websites for founders and studios who treat their landing page like a sales engineer.
+            {hero.intro}
           </p>
 
           <div className="flex items-end justify-start md:justify-end">
@@ -211,18 +200,18 @@ function Hero() {
   );
 }
 
-function Marquee() {
+function Marquee({ marquee }: { marquee: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const x = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
-  const items = ["Landing pages", "✦", "Brand sites", "✦", "E-commerce", "✦", "Web apps", "✦", "SEO", "✦", "Performance", "✦", "Animation", "✦", "CMS", "✦"];
+  const items = marquee.split(",").map((s) => s.trim()).filter(Boolean);
   return (
     <div ref={ref} className="border-y border-border py-6 overflow-hidden bg-background">
       <div className="flex animate-marquee whitespace-nowrap">
         {[...Array(2)].map((_, k) => (
           <motion.div key={k} style={{ x }} className="flex shrink-0">
             {items.map((it, i) => (
-              <span key={i} className={`font-display text-5xl md:text-7xl px-8 ${it === "★" ? "text-accent" : "text-foreground"}`}>
+              <span key={i} className={`font-display text-5xl md:text-7xl px-8 ${it === "✦" ? "text-accent" : "text-foreground"}`}>
                 {it}
               </span>
             ))}
@@ -233,13 +222,13 @@ function Marquee() {
   );
 }
 
-function Work() {
+function Work({ work }: { work: SiteContent["work"] }) {
   return (
     <section id="work" className="px-6 md:px-10 py-24 md:py-32">
       <div className="flex items-end justify-between mb-16">
         <Reveal>
-          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground mb-4">[ Selected work ]</p>
-          <h2 className="font-display text-5xl md:text-7xl">Brands we've<br /><span className="italic text-accent">put online</span>.</h2>
+          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground mb-4">{work.eyebrow}</p>
+          <h2 className="font-display text-5xl md:text-7xl">{work.title}<br /><span className="italic text-accent">{work.titleItalic}</span>.</h2>
         </Reveal>
         <Reveal delay={0.2}>
           <a href="#contact" className="hidden md:inline text-sm uppercase tracking-wider text-muted-foreground hover:text-accent">All projects →</a>
@@ -247,15 +236,15 @@ function Work() {
       </div>
 
       <div className="grid md:grid-cols-2 gap-x-8 gap-y-20">
-        {projects.map((p, i) => (
-          <ProjectCard key={p.n} p={p} offset={i % 2 === 1} />
+        {work.projects.map((p, i) => (
+          <ProjectCard key={p.n + i} p={p} offset={i % 2 === 1} />
         ))}
       </div>
     </section>
   );
 }
 
-function ProjectCard({ p, offset }: { p: typeof projects[number]; offset: boolean }) {
+function ProjectCard({ p, offset }: { p: SiteContent["work"]["projects"][number]; offset: boolean }) {
   const ref = useRef<HTMLAnchorElement>(null);
   const inView = useInView(ref, { once: true, margin: "-15% 0px" });
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
