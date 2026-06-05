@@ -360,27 +360,27 @@ function Counter({ to }: { to: number }) {
   return <div ref={ref} className="font-display text-6xl text-accent tabular-nums">{String(n).padStart(2, "0")}</div>;
 }
 
-function Services() {
+function Services({ services }: { services: SiteContent["services"] }) {
   return (
     <section id="services" className="px-6 md:px-10 py-24 md:py-32 border-t border-border">
       <div className="grid md:grid-cols-12 gap-8 mb-16">
         <Reveal className="md:col-span-3">
-          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">[ Process ]</p>
+          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">{services.eyebrow}</p>
         </Reveal>
         <Reveal className="md:col-span-9">
-          <h2 className="font-display text-5xl md:text-7xl">Four steps,<br /><span className="italic text-accent">two weeks</span>.</h2>
+          <h2 className="font-display text-5xl md:text-7xl">{services.title}<br /><span className="italic text-accent">{services.titleItalic}</span>.</h2>
         </Reveal>
       </div>
       <ul>
-        {services.map((s, i) => (
-          <ServiceRow key={s.k} s={s} i={i} />
+        {services.items.map((s, i) => (
+          <ServiceRow key={s.k + i} s={s} i={i} />
         ))}
       </ul>
     </section>
   );
 }
 
-function ServiceRow({ s, i }: { s: typeof services[number]; i: number }) {
+function ServiceRow({ s, i }: { s: SiteContent["services"]["items"][number]; i: number }) {
   const ref = useRef<HTMLLIElement>(null);
   const inView = useInView(ref, { once: true, margin: "-10% 0px" });
   const [hover, setHover] = useState(false);
@@ -414,21 +414,21 @@ function ServiceRow({ s, i }: { s: typeof services[number]; i: number }) {
   );
 }
 
-function Testimonials() {
+function Testimonials({ testimonials }: { testimonials: SiteContent["testimonials"] }) {
   return (
     <section className="px-6 md:px-10 py-24 md:py-32 border-t border-border">
       <div className="grid md:grid-cols-12 gap-8 mb-16">
         <Reveal className="md:col-span-3">
-          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">[ Testimonials ]</p>
+          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">{testimonials.eyebrow}</p>
         </Reveal>
         <Reveal className="md:col-span-9">
-          <h2 className="font-display text-5xl md:text-7xl">What clients<br /><span className="italic text-accent">say</span>.</h2>
+          <h2 className="font-display text-5xl md:text-7xl">{testimonials.title}<br /><span className="italic text-accent">{testimonials.titleItalic}</span>.</h2>
         </Reveal>
       </div>
       <RevealStagger className="grid md:grid-cols-3 gap-8">
-        {testimonials.map((t) => (
+        {testimonials.items.map((t, i) => (
           <motion.figure
-            key={t.a}
+            key={t.a + i}
             variants={{
               hidden: { opacity: 0, y: 40 },
               show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
