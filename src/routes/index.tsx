@@ -497,7 +497,7 @@ function MagneticCTA() {
   return (
     <motion.a
       ref={ref}
-      href="mailto:hello@solcut.studio"
+      href="mailto:connect.shyamala@gmail.com"
       style={{ x, y }}
       onMouseMove={(e) => {
         const r = ref.current!.getBoundingClientRect();
@@ -505,9 +505,9 @@ function MagneticCTA() {
         y.set((e.clientY - (r.top + r.height / 2)) * 0.25);
       }}
       onMouseLeave={() => { x.set(0); y.set(0); }}
-      className="group inline-flex items-center gap-4 bg-accent text-accent-foreground rounded-full pl-7 pr-3 py-3 text-lg font-medium uppercase tracking-wider hover:gap-6 transition-[gap]"
+      className="group inline-flex items-center gap-4 bg-accent text-accent-foreground rounded-full pl-7 pr-3 py-3 text-lg font-medium normal-case tracking-wide hover:gap-6 transition-[gap]"
     >
-      hello@solcut.studio
+      connect.shyamala@gmail.com
       <motion.span whileHover={{ rotate: 45 }} className="w-10 h-10 rounded-full bg-background text-foreground grid place-items-center">→</motion.span>
     </motion.a>
   );
