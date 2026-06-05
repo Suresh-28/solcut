@@ -25,6 +25,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   useLenis();
+  const content = useSiteContent();
   const [time, setTime] = useState("");
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.2 });
@@ -48,14 +49,14 @@ function Index() {
       />
       <Cursor />
       <Nav />
-      <Hero />
-      <Marquee />
-      <Work />
-      <About />
-      <Services />
-      <Testimonials />
-      <Contact />
-      <Footer time={time} />
+      <Hero hero={content.hero} />
+      <Marquee marquee={content.marquee} />
+      <Work work={content.work} />
+      <About about={content.about} />
+      <Services services={content.services} />
+      <Testimonials testimonials={content.testimonials} />
+      <Contact contact={content.contact} />
+      <Footer time={time} footer={content.footer} contact={content.contact} />
     </main>
   );
 }
