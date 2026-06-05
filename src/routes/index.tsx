@@ -76,6 +76,7 @@ function Index() {
       <Work />
       <About />
       <Services />
+      <Testimonials />
       <Contact />
       <Footer time={time} />
     </main>
