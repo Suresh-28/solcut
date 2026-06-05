@@ -460,7 +460,7 @@ function Contact() {
           <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground mb-8">[ Let's talk ]</p>
         </Reveal>
         <h2 className="font-display text-[14vw] md:text-[11vw] leading-[0.95] text-balance">
-          {["Got something", "worth making?"].map((line, i) => (
+          {["Let's build something", "worth visiting."].map((line, i) => (
             <span key={i} className="block overflow-hidden pb-[0.12em]">
               <motion.span
                 initial={{ y: "110%" }}
@@ -474,6 +474,11 @@ function Contact() {
             </span>
           ))}
         </h2>
+        <Reveal>
+          <p className="mt-8 max-w-xl text-foreground/70 text-lg">
+            Replies within 24h. Tell us about the project, or email us directly.
+          </p>
+        </Reveal>
         <Reveal delay={0.3}>
           <div ref={ref} className="mt-12 flex flex-wrap items-center gap-6">
             <MagneticCTA />
