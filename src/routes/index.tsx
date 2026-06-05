@@ -2,12 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform, useSpring, useInView, AnimatePresence } from "motion/react";
 import heroShape from "@/assets/hero-shape.jpg";
-import work1 from "@/assets/work-1.jpg";
-import work2 from "@/assets/work-2.jpg";
-import work3 from "@/assets/work-3.jpg";
-import work4 from "@/assets/work-4.jpg";
 import { useLenis } from "@/hooks/use-lenis";
 import { Reveal, RevealStagger } from "@/components/reveal";
+import { useSiteContent, type SiteContent } from "@/lib/site-content";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -25,26 +22,6 @@ export const Route = createFileRoute("/")({
   }),
   component: Index,
 });
-
-const projects = [
-  { n: "01", title: "Northwind Capital", tag: "Financial advisory", year: "2025", img: work1 },
-  { n: "02", title: "Field & Foundry", tag: "Furniture studio", year: "2025", img: work2 },
-  { n: "03", title: "Tertia Labs", tag: "Developer tooling", year: "2024", img: work3 },
-  { n: "04", title: "Marin & Co.", tag: "Brand / Web", year: "2024", img: work4 },
-];
-
-const services = [
-  { k: "01", t: "Discovery", d: "We map your customer, your offer, and the proof points that already convert in conversation." },
-  { k: "02", t: "Design", d: "Minimal layouts, opinionated typography, no template tells. Every section earns its place." },
-  { k: "03", t: "Build", d: "Hand-coded with modern stacks. 95+ Lighthouse, accessible by default, edited without us." },
-  { k: "04", t: "Iterate", d: "We ship in two weeks then watch the data. Headlines, sections, and flows tuned in public." },
-];
-
-const testimonials = [
-  { q: "Solcut turned a two-month redesign into a two-week one — and the inbound finally matches the room.", a: "Hema Rao", r: "Partner, Northwind Capital" },
-  { q: "Our customers said the site felt like the studio. That's the highest compliment.", a: "Marin Idris", r: "Founder, Field & Foundry" },
-  { q: "Fast, opinionated, and the only studio I've worked with that ships on the date they quote.", a: "Jordan Lee", r: "CEO, Tertia Labs" },
-];
 
 function Index() {
   useLenis();
