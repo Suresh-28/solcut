@@ -401,10 +401,10 @@ function Services() {
     <section id="services" className="px-6 md:px-10 py-24 md:py-32 border-t border-border">
       <div className="grid md:grid-cols-12 gap-8 mb-16">
         <Reveal className="md:col-span-3">
-          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">[ What we do ]</p>
+          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">[ Process ]</p>
         </Reveal>
         <Reveal className="md:col-span-9">
-          <h2 className="font-display text-5xl md:text-7xl">Capabilities.</h2>
+          <h2 className="font-display text-5xl md:text-7xl">Four steps,<br /><span className="italic text-accent">two weeks</span>.</h2>
         </Reveal>
       </div>
       <ul>
