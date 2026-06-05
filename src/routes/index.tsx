@@ -519,19 +519,19 @@ function Footer({ time }: { time: string }) {
       <div className="grid md:grid-cols-4 gap-8 text-sm text-muted-foreground">
         <div>
           <div className="font-display text-foreground text-xl">SOLCUT®</div>
-          <p className="mt-3">Lisbon · Berlin · Remote</p>
+          <p className="mt-3">Independent web studio · Est. 2026</p>
         </div>
         <div>
           <div className="uppercase tracking-wider text-foreground/70 mb-3">Contact</div>
-          <p>hello@solcut.studio</p>
-          <p>+351 920 000 000</p>
+          <p><a className="hover:text-accent" href="mailto:connect.shyamala@gmail.com">connect.shyamala@gmail.com</a></p>
+          <p className="mt-1">Replies within 24h</p>
         </div>
         <div>
-          <div className="uppercase tracking-wider text-foreground/70 mb-3">Social</div>
+          <div className="uppercase tracking-wider text-foreground/70 mb-3">Sitemap</div>
           <ul className="space-y-1">
-            <li><a className="hover:text-accent" href="#">Instagram</a></li>
-            <li><a className="hover:text-accent" href="#">Are.na</a></li>
-            <li><a className="hover:text-accent" href="#">LinkedIn</a></li>
+            <li><a className="hover:text-accent" href="#work">Work</a></li>
+            <li><a className="hover:text-accent" href="#services">Process</a></li>
+            <li><a className="hover:text-accent" href="#contact">Contact</a></li>
           </ul>
         </div>
         <div className="md:text-right">
