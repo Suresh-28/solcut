@@ -27,17 +27,23 @@ export const Route = createFileRoute("/")({
 });
 
 const projects = [
-  { n: "01", title: "Vexa Studios", tag: "Identity / Motion", year: "2025", img: work1 },
-  { n: "02", title: "Acidwave", tag: "Brand / Web", year: "2025", img: work2 },
-  { n: "03", title: "Monolith&Co", tag: "Art Direction", year: "2024", img: work3 },
-  { n: "04", title: "Orbit Labs", tag: "Product / Identity", year: "2024", img: work4 },
+  { n: "01", title: "Northwind Capital", tag: "Financial advisory", year: "2025", img: work1 },
+  { n: "02", title: "Field & Foundry", tag: "Furniture studio", year: "2025", img: work2 },
+  { n: "03", title: "Tertia Labs", tag: "Developer tooling", year: "2024", img: work3 },
+  { n: "04", title: "Marin & Co.", tag: "Brand / Web", year: "2024", img: work4 },
 ];
 
 const services = [
-  { k: "01", t: "Brand Identity", d: "Logos, visual systems and guidelines that hold up under pressure." },
-  { k: "02", t: "Digital Product", d: "Interfaces, websites and apps engineered for clarity and craft." },
-  { k: "03", t: "Motion & Direction", d: "Animation, art direction and campaign systems that move." },
-  { k: "04", t: "Strategy", d: "Naming, positioning and messaging anchored in a real point of view." },
+  { k: "01", t: "Discovery", d: "We map your customer, your offer, and the proof points that already convert in conversation." },
+  { k: "02", t: "Design", d: "Minimal layouts, opinionated typography, no template tells. Every section earns its place." },
+  { k: "03", t: "Build", d: "Hand-coded with modern stacks. 95+ Lighthouse, accessible by default, edited without us." },
+  { k: "04", t: "Iterate", d: "We ship in two weeks then watch the data. Headlines, sections, and flows tuned in public." },
+];
+
+const testimonials = [
+  { q: "Solcut turned a two-month redesign into a two-week one — and the inbound finally matches the room.", a: "Hema Rao", r: "Partner, Northwind Capital" },
+  { q: "Our customers said the site felt like the studio. That's the highest compliment.", a: "Marin Idris", r: "Founder, Field & Foundry" },
+  { q: "Fast, opinionated, and the only studio I've worked with that ships on the date they quote.", a: "Jordan Lee", r: "CEO, Tertia Labs" },
 ];
 
 function Index() {
