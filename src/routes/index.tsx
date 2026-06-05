@@ -342,19 +342,19 @@ function About() {
     <section id="about" className="px-6 md:px-10 py-24 md:py-32 border-t border-border">
       <div className="grid md:grid-cols-12 gap-8">
         <Reveal className="md:col-span-3">
-          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">[ The Studio ]</p>
+          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">[ Studio note ]</p>
         </Reveal>
         <div className="md:col-span-9">
           <Reveal>
             <p className="font-display text-3xl md:text-6xl leading-[1.05] text-balance">
-              A studio of six. No account managers, no decks for the sake of decks. We sit close to the work and ship things we'd put on our own walls — <span className="text-accent">obsession over scale.</span>
+              A website is the only employee that works while you sleep — <span className="text-accent italic">ours show up rested.</span> Most agencies disappear for two months. We commit to a fixed timeline and ship something you can put in front of a customer by Friday week two.
             </p>
           </Reveal>
           <RevealStagger className="grid sm:grid-cols-3 gap-8 mt-20">
             {[
-              { k: "06", l: "People in the studio" },
-              { k: "42", l: "Brands shaped since 2019" },
-              { k: "11", l: "Time zones, one Slack" },
+              { k: "02", l: "Weeks to ship, end to end" },
+              { k: "95", l: "Lighthouse score, baseline" },
+              { k: "24", l: "Hour reply window" },
             ].map((s) => (
               <motion.div
                 key={s.k}
