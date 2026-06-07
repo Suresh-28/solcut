@@ -251,8 +251,8 @@ function Editor({ onLogout }: { onLogout: () => void }) {
         </Section>
 
         <div className="flex justify-end gap-2 pb-20">
-          <button onClick={reset} className="text-xs uppercase tracking-wider px-4 py-2 border border-border rounded-full hover:bg-muted">Reset</button>
-          <button onClick={save} className="text-xs uppercase tracking-wider px-6 py-2 bg-accent text-accent-foreground rounded-full hover:opacity-90">Save changes</button>
+          <button disabled={busy} onClick={reset} className="text-xs uppercase tracking-wider px-4 py-2 border border-border rounded-full hover:bg-muted disabled:opacity-50">Reset</button>
+          <button disabled={busy} onClick={save} className="text-xs uppercase tracking-wider px-6 py-2 bg-accent text-accent-foreground rounded-full hover:opacity-90 disabled:opacity-50">{busy ? "Saving…" : "Save changes"}</button>
         </div>
       </div>
     </main>
