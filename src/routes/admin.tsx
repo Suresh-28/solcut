@@ -138,7 +138,7 @@ function Editor({ onLogout }: { onLogout: () => void }) {
               { key: "title", label: "Title" },
               { key: "tag", label: "Tag" },
               { key: "year", label: "Year" },
-              { key: "img", label: "Image URL" },
+              { key: "img", label: "Image", image: true },
             ]}
             onChange={(items) => update({ work: { ...c.work, projects: items } })}
           />
