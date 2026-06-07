@@ -137,12 +137,15 @@ function Editor({ onLogout }: { onLogout: () => void }) {
       <header className="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur px-6 md:px-10 py-4 flex items-center justify-between">
         <div>
           <div className="font-display text-xl">SOLCUT® / Admin</div>
-          <div className="text-xs text-muted-foreground">Edit homepage content {savedAt && `· saved ${savedAt}`}</div>
+          <div className="text-xs text-muted-foreground">
+            Edit homepage content {savedAt && `· saved ${savedAt}`}
+            {err && <span className="text-destructive ml-2">· {err}</span>}
+          </div>
         </div>
         <div className="flex items-center gap-2">
           <a href="/" target="_blank" rel="noreferrer" className="text-xs uppercase tracking-wider px-3 py-2 border border-border rounded-full hover:bg-muted">View site →</a>
-          <button onClick={reset} className="text-xs uppercase tracking-wider px-3 py-2 border border-border rounded-full hover:bg-muted">Reset</button>
-          <button onClick={save} className="text-xs uppercase tracking-wider px-4 py-2 bg-accent text-accent-foreground rounded-full hover:opacity-90">Save</button>
+          <button disabled={busy} onClick={reset} className="text-xs uppercase tracking-wider px-3 py-2 border border-border rounded-full hover:bg-muted disabled:opacity-50">Reset</button>
+          <button disabled={busy} onClick={save} className="text-xs uppercase tracking-wider px-4 py-2 bg-accent text-accent-foreground rounded-full hover:opacity-90 disabled:opacity-50">{busy ? "Saving…" : "Save"}</button>
           <button onClick={onLogout} className="text-xs uppercase tracking-wider px-3 py-2 border border-border rounded-full hover:bg-muted">Logout</button>
         </div>
       </header>
