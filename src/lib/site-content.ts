@@ -102,7 +102,7 @@ export const defaultContent: SiteContent = {
     eyebrow: "[ Let's talk ]",
     headlineLines: ["Let's build something", "worth visiting."],
     note: "Replies within 24h. Tell us about the project, or email us directly.",
-    email: "connect.shyamala@gmail.com",
+    email: "connect.solcut@gmail.com",
   },
   footer: {
     tagline: "Independent web studio · Est. 2026",

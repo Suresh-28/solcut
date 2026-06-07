@@ -480,11 +480,68 @@ function Contact({ contact }: { contact: SiteContent["contact"] }) {
         <Reveal delay={0.3}>
           <div ref={ref} className="mt-12 flex flex-wrap items-center gap-6">
             <MagneticCTA email={contact.email} />
-            <a href="#" className="text-sm uppercase tracking-wider text-muted-foreground hover:text-accent">Book a call →</a>
+            <a href={`mailto:${contact.email}`} className="text-sm uppercase tracking-wider text-muted-foreground hover:text-accent">Book a call →</a>
           </div>
+        </Reveal>
+        <Reveal delay={0.4}>
+          <ContactForm email={contact.email} />
         </Reveal>
       </div>
     </section>
+  );
+}
+
+function ContactForm({ email }: { email: string }) {
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [sent, setSent] = useState(false);
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const subject = encodeURIComponent(`New project enquiry — ${form.name || "Website"}`);
+    const body = encodeURIComponent(`From: ${form.name} <${form.email}>\n\n${form.message}`);
+    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+    setSent(true);
+  };
+  return (
+    <form onSubmit={onSubmit} className="mt-16 grid md:grid-cols-2 gap-5 max-w-3xl border-t border-border pt-10">
+      <label className="block">
+        <div className="text-xs uppercase tracking-[0.25em] text-muted-foreground mb-2">Your name</div>
+        <input
+          required
+          value={form.name}
+          onChange={(e) => setForm({ ...form, name: e.target.value })}
+          className="w-full bg-transparent border-b border-border focus:border-accent outline-none py-2 text-foreground"
+        />
+      </label>
+      <label className="block">
+        <div className="text-xs uppercase tracking-[0.25em] text-muted-foreground mb-2">Email</div>
+        <input
+          required
+          type="email"
+          value={form.email}
+          onChange={(e) => setForm({ ...form, email: e.target.value })}
+          className="w-full bg-transparent border-b border-border focus:border-accent outline-none py-2 text-foreground"
+        />
+      </label>
+      <label className="block md:col-span-2">
+        <div className="text-xs uppercase tracking-[0.25em] text-muted-foreground mb-2">Tell us about your project</div>
+        <textarea
+          required
+          rows={4}
+          value={form.message}
+          onChange={(e) => setForm({ ...form, message: e.target.value })}
+          className="w-full bg-transparent border-b border-border focus:border-accent outline-none py-2 text-foreground resize-none"
+        />
+      </label>
+      <div className="md:col-span-2 flex items-center gap-4">
+        <button
+          type="submit"
+          className="inline-flex items-center gap-3 bg-accent text-accent-foreground rounded-full px-6 py-3 text-sm uppercase tracking-wider hover:opacity-90"
+        >
+          Send enquiry <span>→</span>
+        </button>
+        {sent && <span className="text-sm text-muted-foreground">Opening your mail client…</span>}
+      </div>
+    </form>
   );
 }
 

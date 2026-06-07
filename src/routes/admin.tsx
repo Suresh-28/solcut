@@ -138,7 +138,7 @@ function Editor({ onLogout }: { onLogout: () => void }) {
               { key: "title", label: "Title" },
               { key: "tag", label: "Tag" },
               { key: "year", label: "Year" },
-              { key: "img", label: "Image URL" },
+              { key: "img", label: "Image", image: true },
             ]}
             onChange={(items) => update({ work: { ...c.work, projects: items } })}
           />
@@ -286,7 +286,7 @@ function ListField({ label, items, onChange }: { label: string; items: string[];
   );
 }
 
-type FieldSpec = { key: string; label: string; textarea?: boolean };
+type FieldSpec = { key: string; label: string; textarea?: boolean; image?: boolean };
 
 function RepeaterField<T extends Record<string, string>>({
   label,
@@ -301,6 +301,11 @@ function RepeaterField<T extends Record<string, string>>({
   fields: FieldSpec[];
   onChange: (items: T[]) => void;
 }) {
+  const setField = (i: number, key: string, value: string) => {
+    const next = [...items];
+    next[i] = { ...next[i], [key]: value };
+    onChange(next);
+  };
   return (
     <div>
       <div className="text-xs uppercase tracking-wider mb-2 text-muted-foreground">{label}</div>
@@ -317,33 +322,67 @@ function RepeaterField<T extends Record<string, string>>({
                 Remove
               </button>
             </div>
-            {fields.map((f) => (
-              <label key={f.key} className="block">
-                <div className="text-[10px] uppercase tracking-wider mb-1 text-muted-foreground">{f.label}</div>
-                {f.textarea ? (
-                  <textarea
-                    rows={2}
-                    className={inputCls}
-                    value={(item as any)[f.key] ?? ""}
-                    onChange={(e) => {
-                      const next = [...items];
-                      next[i] = { ...next[i], [f.key]: e.target.value };
-                      onChange(next);
-                    }}
-                  />
-                ) : (
-                  <input
-                    className={inputCls}
-                    value={(item as any)[f.key] ?? ""}
-                    onChange={(e) => {
-                      const next = [...items];
-                      next[i] = { ...next[i], [f.key]: e.target.value };
-                      onChange(next);
-                    }}
-                  />
-                )}
-              </label>
-            ))}
+            {fields.map((f) => {
+              const val = (item as any)[f.key] ?? "";
+              return (
+                <div key={f.key}>
+                  <div className="text-[10px] uppercase tracking-wider mb-1 text-muted-foreground">{f.label}</div>
+                  {f.image ? (
+                    <div className="space-y-2">
+                      {val && (
+                        <img src={val} alt="" className="h-28 w-28 object-cover rounded-md border border-border" />
+                      )}
+                      <div className="flex gap-2 items-center">
+                        <label className="text-xs uppercase tracking-wider px-3 py-1.5 border border-border rounded-full hover:bg-muted cursor-pointer">
+                          {val ? "Replace image" : "Upload image"}
+                          <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={(e) => {
+                              const file = e.target.files?.[0];
+                              if (!file) return;
+                              const reader = new FileReader();
+                              reader.onload = () => setField(i, f.key, String(reader.result));
+                              reader.readAsDataURL(file);
+                              e.target.value = "";
+                            }}
+                          />
+                        </label>
+                        {val && (
+                          <button
+                            type="button"
+                            onClick={() => setField(i, f.key, "")}
+                            className="text-xs px-3 py-1.5 border border-border rounded-full hover:bg-muted"
+                          >
+                            Clear
+                          </button>
+                        )}
+                      </div>
+                      <input
+                        className={inputCls}
+                        placeholder="…or paste an image URL"
+                        value={val.startsWith("data:") ? "" : val}
+                        onChange={(e) => setField(i, f.key, e.target.value)}
+                      />
+                    </div>
+                  ) : f.textarea ? (
+                    <textarea
+                      rows={2}
+                      className={inputCls}
+                      value={val}
+                      onChange={(e) => setField(i, f.key, e.target.value)}
+                    />
+                  ) : (
+                    <input
+                      className={inputCls}
+                      value={val}
+                      onChange={(e) => setField(i, f.key, e.target.value)}
+                    />
+                  )}
+                </div>
+              );
+            })}
           </div>
         ))}
       </div>
