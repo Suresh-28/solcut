@@ -1,12 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
 import {
   defaultContent,
-  loadContent,
-  resetContent,
-  saveContent,
+  fetchContent,
+  notifyContentUpdated,
   type SiteContent,
 } from "@/lib/site-content";
+import { saveSiteContent, resetSiteContent } from "@/lib/site-content.functions";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({ meta: [{ title: "Admin — Solcut" }, { name: "robots", content: "noindex,nofollow" }] }),
@@ -16,6 +17,7 @@ export const Route = createFileRoute("/admin")({
 const ADMIN_USER = "admin";
 const ADMIN_PASS = "solcut@2010";
 const AUTH_KEY = "solcut:admin-auth";
+const PASS_KEY = "solcut:admin-pass";
 
 function AdminPage() {
   const [authed, setAuthed] = useState(false);
@@ -28,7 +30,15 @@ function AdminPage() {
 
   if (checking) return null;
   if (!authed) return <Login onSuccess={() => setAuthed(true)} />;
-  return <Editor onLogout={() => { sessionStorage.removeItem(AUTH_KEY); setAuthed(false); }} />;
+  return (
+    <Editor
+      onLogout={() => {
+        sessionStorage.removeItem(AUTH_KEY);
+        sessionStorage.removeItem(PASS_KEY);
+        setAuthed(false);
+      }}
+    />
+  );
 }
 
 function Login({ onSuccess }: { onSuccess: () => void }) {
@@ -40,6 +50,7 @@ function Login({ onSuccess }: { onSuccess: () => void }) {
     e.preventDefault();
     if (u === ADMIN_USER && p === ADMIN_PASS) {
       sessionStorage.setItem(AUTH_KEY, "1");
+      sessionStorage.setItem(PASS_KEY, p);
       onSuccess();
     } else {
       setErr("Invalid credentials");
@@ -78,21 +89,47 @@ function Login({ onSuccess }: { onSuccess: () => void }) {
 function Editor({ onLogout }: { onLogout: () => void }) {
   const [c, setC] = useState<SiteContent>(defaultContent);
   const [savedAt, setSavedAt] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
+  const save$ = useServerFn(saveSiteContent);
+  const reset$ = useServerFn(resetSiteContent);
 
-  useEffect(() => { setC(loadContent()); }, []);
+  useEffect(() => {
+    fetchContent().then(setC);
+  }, []);
 
   const update = (patch: Partial<SiteContent>) => setC((prev) => ({ ...prev, ...patch }));
 
-  const save = () => {
-    saveContent(c);
-    setSavedAt(new Date().toLocaleTimeString());
+  const save = async () => {
+    const password = sessionStorage.getItem(PASS_KEY) ?? "";
+    setBusy(true);
+    setErr(null);
+    try {
+      await save$({ data: { password, data: c } });
+      notifyContentUpdated(c);
+      setSavedAt(new Date().toLocaleTimeString());
+    } catch (e: any) {
+      setErr(e?.message ?? "Save failed");
+    } finally {
+      setBusy(false);
+    }
   };
 
-  const reset = () => {
+  const reset = async () => {
     if (!confirm("Reset all content to defaults?")) return;
-    resetContent();
-    setC(defaultContent);
-    setSavedAt(null);
+    const password = sessionStorage.getItem(PASS_KEY) ?? "";
+    setBusy(true);
+    setErr(null);
+    try {
+      await reset$({ data: { password } });
+      setC(defaultContent);
+      notifyContentUpdated(defaultContent);
+      setSavedAt(null);
+    } catch (e: any) {
+      setErr(e?.message ?? "Reset failed");
+    } finally {
+      setBusy(false);
+    }
   };
 
   return (
