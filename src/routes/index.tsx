@@ -113,7 +113,7 @@ function Nav() {
       <div className={`flex items-center justify-between px-6 md:px-10 transition-[padding] duration-500 ${scrolled ? "py-3" : "py-5"} text-foreground`}>
         <a href="#top" className="font-display text-xl tracking-tight">SOLCUT®</a>
         <nav className="hidden md:flex items-center gap-8 text-sm uppercase tracking-wider">
-          {[["Work","#work"],["Studio","#about"],["Services","#services"],["Contact","#contact"]].map(([l,h]) => (
+          {[["Work","#work"],["Studio","#about"],["Services","#services"],["Pricing","#pricing"],["Contact","#contact"]].map(([l,h]) => (
             <a key={l} href={h} className="relative group">
               <span className="group-hover:text-accent transition-colors">{l}</span>
               <span className="absolute -bottom-1 left-0 h-px w-0 bg-accent group-hover:w-full transition-[width] duration-500" />
