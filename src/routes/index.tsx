@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform, useSpring, useInView, AnimatePresence } from "motion/react";
 import heroShape from "@/assets/hero-shape.jpg";
@@ -709,7 +709,12 @@ function Footer({ time, footer, contact }: { time: string; footer: SiteContent["
         <div className="md:text-right">
           <div className="uppercase tracking-wider text-foreground/70 mb-3">Local time</div>
           <p className="font-mono tabular-nums text-foreground">{time || "--:--:-- LIS"}</p>
-          <p className="mt-3 text-xs">© {new Date().getFullYear()} Solcut Studio</p>
+          <div className="mt-3 flex flex-wrap justify-end gap-3 text-xs">
+            <Link to="/privacy-policy" className="hover:text-accent transition-colors">Privacy</Link>
+            <Link to="/terms-of-service" className="hover:text-accent transition-colors">Terms</Link>
+            <Link to="/cookie-policy" className="hover:text-accent transition-colors">Cookies</Link>
+          </div>
+          <p className="mt-2 text-xs">© {new Date().getFullYear()} Solcut Studio</p>
         </div>
       </div>
     </footer>
