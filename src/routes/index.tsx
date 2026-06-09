@@ -54,6 +54,7 @@ function Index() {
       <Work work={content.work} />
       <About about={content.about} />
       <Services services={content.services} />
+      <Pricing />
       <Testimonials testimonials={content.testimonials} />
       <Contact contact={content.contact} />
       <Footer time={time} footer={content.footer} contact={content.contact} />
@@ -112,7 +113,7 @@ function Nav() {
       <div className={`flex items-center justify-between px-6 md:px-10 transition-[padding] duration-500 ${scrolled ? "py-3" : "py-5"} text-foreground`}>
         <a href="#top" className="font-display text-xl tracking-tight">SOLCUT®</a>
         <nav className="hidden md:flex items-center gap-8 text-sm uppercase tracking-wider">
-          {[["Work","#work"],["Studio","#about"],["Services","#services"],["Contact","#contact"]].map(([l,h]) => (
+          {[["Work","#work"],["Studio","#about"],["Services","#services"],["Pricing","#pricing"],["Contact","#contact"]].map(([l,h]) => (
             <a key={l} href={h} className="relative group">
               <span className="group-hover:text-accent transition-colors">{l}</span>
               <span className="absolute -bottom-1 left-0 h-px w-0 bg-accent group-hover:w-full transition-[width] duration-500" />
@@ -413,6 +414,120 @@ function ServiceRow({ s, i }: { s: SiteContent["services"]["items"][number]; i: 
         <p className="md:col-span-5 text-foreground/70 text-lg max-w-md">{s.d}</p>
       </div>
     </motion.li>
+  );
+}
+
+const PRICING_FEATURES = [
+  { t: "Free Host Domain", d: "Get a professional domain name on us" },
+  { t: "Hosting", d: "Fast & secure web hosting" },
+  { t: "Mobile Responsive", d: "Looks perfect on all devices" },
+  { t: "WhatsApp Integration", d: "Direct connect with your customers" },
+  { t: "Social Media Setup", d: "Connect your social media profiles" },
+  { t: "SEO Friendly Content", d: "Optimized content to rank better" },
+  { t: "Support", d: "30 Days free support after delivery" },
+];
+
+const PRICING_TIERS = [
+  {
+    name: "Single Landing Page",
+    price: "10,999",
+    highlight: "Modern, responsive & conversion-focused design",
+    featured: false,
+  },
+  {
+    name: "5 Page Website",
+    price: "15,999",
+    highlight: "Up to 5 unique pages for your business",
+    featured: true,
+  },
+  {
+    name: "10 Page Website",
+    price: "21,999",
+    highlight: "Up to 10 unique pages for your business",
+    featured: false,
+  },
+];
+
+function Pricing() {
+  return (
+    <section id="pricing" className="px-6 md:px-10 py-24 md:py-32 border-t border-border">
+      <div className="grid md:grid-cols-12 gap-8 mb-16">
+        <Reveal className="md:col-span-3">
+          <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">[ Pricing ]</p>
+        </Reveal>
+        <Reveal className="md:col-span-9">
+          <h2 className="font-display text-5xl md:text-7xl">
+            Business website,<br />
+            <span className="italic text-accent">we've got the strategy</span>.
+          </h2>
+          <p className="mt-6 text-foreground/70 text-lg max-w-2xl">
+            Three fixed-price packages. Everything you need to launch a fast,
+            polished site that converts — domain, hosting, design and support included.
+          </p>
+        </Reveal>
+      </div>
+
+      <RevealStagger className="grid md:grid-cols-3 gap-6">
+        {PRICING_TIERS.map((tier) => (
+          <motion.div
+            key={tier.name}
+            variants={{
+              hidden: { opacity: 0, y: 40 },
+              show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
+            }}
+            whileHover={{ y: -6 }}
+            transition={{ type: "spring", stiffness: 200, damping: 20 }}
+            className={`relative flex flex-col rounded-2xl border p-8 ${
+              tier.featured
+                ? "border-accent bg-accent/5"
+                : "border-border bg-surface/40"
+            }`}
+          >
+            {tier.featured && (
+              <span className="absolute -top-3 left-8 bg-accent text-accent-foreground text-xs uppercase tracking-wider px-3 py-1 rounded-full">
+                Most popular
+              </span>
+            )}
+            <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">
+              {tier.name}
+            </p>
+            <div className="mt-4 flex items-baseline gap-1">
+              <span className="font-display text-5xl md:text-6xl">₹{tier.price}</span>
+              <span className="text-muted-foreground text-sm">/-</span>
+            </div>
+            <p className="mt-3 text-foreground/70">{tier.highlight}</p>
+
+            <div className="mt-8 border-t border-border pt-6">
+              <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground mb-4">
+                What you get
+              </p>
+              <ul className="space-y-3">
+                {PRICING_FEATURES.map((f) => (
+                  <li key={f.t} className="flex gap-3">
+                    <span className="text-accent mt-1">✦</span>
+                    <div>
+                      <div className="text-foreground text-sm font-medium">{f.t}</div>
+                      <div className="text-muted-foreground text-xs">{f.d}</div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <a
+              href="#contact"
+              className={`mt-8 inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm uppercase tracking-wider transition-colors ${
+                tier.featured
+                  ? "bg-accent text-accent-foreground hover:opacity-90"
+                  : "border border-foreground/40 hover:bg-accent hover:text-accent-foreground hover:border-accent"
+              }`}
+            >
+              Get started →
+            </a>
+          </motion.div>
+        ))}
+      </RevealStagger>
+    </section>
   );
 }
 
