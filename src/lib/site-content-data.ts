@@ -14,7 +14,7 @@ export type SiteContent = {
     eyebrow: string;
     title: string;
     titleItalic: string;
-    projects: { n: string; title: string; tag: string; year: string; img: string }[];
+    projects: { n: string; title: string; tag: string; year: string; img: string; url: string }[];
   };
   about: {
     eyebrow: string;
@@ -60,10 +60,10 @@ export const defaultContent: SiteContent = {
     title: "Brands we've",
     titleItalic: "put online",
     projects: [
-      { n: "01", title: "Northwind Capital", tag: "Financial advisory", year: "2025", img: work1 },
-      { n: "02", title: "Field & Foundry", tag: "Furniture studio", year: "2025", img: work2 },
-      { n: "03", title: "Tertia Labs", tag: "Developer tooling", year: "2024", img: work3 },
-      { n: "04", title: "Marin & Co.", tag: "Brand / Web", year: "2024", img: work4 },
+      { n: "01", title: "Northwind Capital", tag: "Financial advisory", year: "2025", img: work1, url: "" },
+      { n: "02", title: "Field & Foundry", tag: "Furniture studio", year: "2025", img: work2, url: "" },
+      { n: "03", title: "Tertia Labs", tag: "Developer tooling", year: "2024", img: work3, url: "" },
+      { n: "04", title: "Marin & Co.", tag: "Brand / Web", year: "2024", img: work4, url: "" },
     ],
   },
   about: {
