@@ -254,7 +254,9 @@ function ProjectCard({ p, offset }: { p: SiteContent["work"]["projects"][number]
   return (
     <motion.a
       ref={ref}
-      href="#"
+      href={p.url || "#"}
+      target={p.url ? "_blank" : undefined}
+      rel={p.url ? "noopener noreferrer" : undefined}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       initial={{ opacity: 0, y: 80 }}
@@ -290,7 +292,7 @@ function ProjectCard({ p, offset }: { p: SiteContent["work"]["projects"][number]
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
               className="absolute bottom-6 right-6 w-20 h-20 rounded-full bg-accent text-accent-foreground grid place-items-center font-display text-sm uppercase"
             >
-              View
+              {p.url ? "View" : "Soon"}
             </motion.span>
           )}
         </AnimatePresence>
