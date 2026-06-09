@@ -54,6 +54,7 @@ function Index() {
       <Work work={content.work} />
       <About about={content.about} />
       <Services services={content.services} />
+      <Pricing />
       <Testimonials testimonials={content.testimonials} />
       <Contact contact={content.contact} />
       <Footer time={time} footer={content.footer} contact={content.contact} />
