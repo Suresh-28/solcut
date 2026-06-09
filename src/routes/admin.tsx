@@ -172,13 +172,14 @@ function Editor({ onLogout }: { onLogout: () => void }) {
           <RepeaterField
             label="Projects"
             items={c.work.projects}
-            blank={{ n: "", title: "", tag: "", year: "", img: "" }}
+            blank={{ n: "", title: "", tag: "", year: "", img: "", url: "" }}
             fields={[
               { key: "n", label: "No." },
               { key: "title", label: "Title" },
               { key: "tag", label: "Tag" },
               { key: "year", label: "Year" },
               { key: "img", label: "Image", image: true },
+              { key: "url", label: "Project URL" },
             ]}
             onChange={(items) => update({ work: { ...c.work, projects: items } })}
           />
