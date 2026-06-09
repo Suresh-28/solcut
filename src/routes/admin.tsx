@@ -7,53 +7,50 @@ import {
   notifyContentUpdated,
   type SiteContent,
 } from "@/lib/site-content";
-import { saveSiteContent, resetSiteContent } from "@/lib/site-content.functions";
+import {
+  saveSiteContent,
+  resetSiteContent,
+  verifyAdminPassword,
+} from "@/lib/site-content.functions";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({ meta: [{ title: "Admin — Solcut" }, { name: "robots", content: "noindex,nofollow" }] }),
   component: AdminPage,
 });
 
-const ADMIN_USER = "admin";
-const ADMIN_PASS = "solcut@2010";
-const AUTH_KEY = "solcut:admin-auth";
-const PASS_KEY = "solcut:admin-pass";
-
 function AdminPage() {
-  const [authed, setAuthed] = useState(false);
-  const [checking, setChecking] = useState(true);
+  // Password is held only in memory for the current session. No client-side
+  // credentials, no sessionStorage auth flag — every privileged action
+  // re-verifies the password against the server.
+  const [password, setPassword] = useState<string | null>(null);
 
-  useEffect(() => {
-    setAuthed(sessionStorage.getItem(AUTH_KEY) === "1");
-    setChecking(false);
-  }, []);
-
-  if (checking) return null;
-  if (!authed) return <Login onSuccess={() => setAuthed(true)} />;
-  return (
-    <Editor
-      onLogout={() => {
-        sessionStorage.removeItem(AUTH_KEY);
-        sessionStorage.removeItem(PASS_KEY);
-        setAuthed(false);
-      }}
-    />
-  );
+  if (!password) return <Login onSuccess={(p) => setPassword(p)} />;
+  return <Editor password={password} onLogout={() => setPassword(null)} />;
 }
 
-function Login({ onSuccess }: { onSuccess: () => void }) {
+function Login({ onSuccess }: { onSuccess: (password: string) => void }) {
   const [u, setU] = useState("");
   const [p, setP] = useState("");
   const [err, setErr] = useState("");
+  const [busy, setBusy] = useState(false);
+  const verify$ = useServerFn(verifyAdminPassword);
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (u === ADMIN_USER && p === ADMIN_PASS) {
-      sessionStorage.setItem(AUTH_KEY, "1");
-      sessionStorage.setItem(PASS_KEY, p);
-      onSuccess();
-    } else {
+    setBusy(true);
+    setErr("");
+    try {
+      // Username is cosmetic — the server only validates the password.
+      if (!u.trim()) {
+        setErr("Enter a username");
+        return;
+      }
+      await verify$({ data: { password: p } });
+      onSuccess(p);
+    } catch {
       setErr("Invalid credentials");
+    } finally {
+      setBusy(false);
     }
   };
 
@@ -78,15 +75,18 @@ function Login({ onSuccess }: { onSuccess: () => void }) {
           className="w-full mb-4 rounded-md border border-input bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-ring"
         />
         {err && <p className="text-destructive text-sm mb-4">{err}</p>}
-        <button className="w-full rounded-full bg-accent text-accent-foreground py-2.5 text-sm uppercase tracking-wider hover:opacity-90">
-          Sign in
+        <button
+          disabled={busy}
+          className="w-full rounded-full bg-accent text-accent-foreground py-2.5 text-sm uppercase tracking-wider hover:opacity-90 disabled:opacity-50"
+        >
+          {busy ? "Signing in…" : "Sign in"}
         </button>
       </form>
     </main>
   );
 }
 
-function Editor({ onLogout }: { onLogout: () => void }) {
+function Editor({ password, onLogout }: { password: string; onLogout: () => void }) {
   const [c, setC] = useState<SiteContent>(defaultContent);
   const [savedAt, setSavedAt] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -101,7 +101,6 @@ function Editor({ onLogout }: { onLogout: () => void }) {
   const update = (patch: Partial<SiteContent>) => setC((prev) => ({ ...prev, ...patch }));
 
   const save = async () => {
-    const password = sessionStorage.getItem(PASS_KEY) ?? "";
     setBusy(true);
     setErr(null);
     try {
@@ -117,7 +116,6 @@ function Editor({ onLogout }: { onLogout: () => void }) {
 
   const reset = async () => {
     if (!confirm("Reset all content to defaults?")) return;
-    const password = sessionStorage.getItem(PASS_KEY) ?? "";
     setBusy(true);
     setErr(null);
     try {
@@ -131,6 +129,7 @@ function Editor({ onLogout }: { onLogout: () => void }) {
       setBusy(false);
     }
   };
+
 
   return (
     <main className="min-h-screen bg-background text-foreground">
