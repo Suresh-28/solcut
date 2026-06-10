@@ -57,7 +57,7 @@ function Index() {
       <Pricing />
       <Testimonials testimonials={content.testimonials} />
       <Contact contact={content.contact} />
-      <Footer time={time} footer={content.footer} contact={content.contact} />
+      <Footer time={time} footer={content.footer} contact={content.contact} social={content.social} />
     </main>
   );
 }
