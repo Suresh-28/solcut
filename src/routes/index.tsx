@@ -685,13 +685,29 @@ function MagneticCTA({ email }: { email: string }) {
   );
 }
 
-function Footer({ time, footer, contact }: { time: string; footer: SiteContent["footer"]; contact: SiteContent["contact"] }) {
+function Footer({ time, footer, contact, social }: { time: string; footer: SiteContent["footer"]; contact: SiteContent["contact"]; social: SiteContent["social"] }) {
   return (
     <footer className="border-t border-border px-6 md:px-10 py-10">
       <div className="grid md:grid-cols-4 gap-8 text-sm text-muted-foreground">
         <div>
           <div className="font-display text-foreground text-xl">SOLCUT®</div>
           <p className="mt-3">{footer.tagline}</p>
+          {social && social.length > 0 && (
+            <div className="mt-4 flex flex-wrap gap-2">
+              {social.filter((s) => s.url && s.platform).map((s, i) => (
+                <a
+                  key={i}
+                  href={s.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={s.platform}
+                  className="w-9 h-9 grid place-items-center rounded-full border border-border text-foreground/80 hover:text-accent hover:border-accent transition-colors"
+                >
+                  <SocialIcon platform={s.platform} />
+                </a>
+              ))}
+            </div>
+          )}
         </div>
         <div>
           <div className="uppercase tracking-wider text-foreground/70 mb-3">Contact</div>
@@ -720,3 +736,26 @@ function Footer({ time, footer, contact }: { time: string; footer: SiteContent["
     </footer>
   );
 }
+
+function SocialIcon({ platform }: { platform: string }) {
+  const p = platform.toLowerCase();
+  const cls = "w-4 h-4";
+  if (p === "twitter" || p === "x")
+    return <svg viewBox="0 0 24 24" className={cls} fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>;
+  if (p === "instagram")
+    return <svg viewBox="0 0 24 24" className={cls} fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>;
+  if (p === "linkedin")
+    return <svg viewBox="0 0 24 24" className={cls} fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-.94 1.83-1.94 3.77-1.94 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.3c0-1.27-.02-2.9-1.77-2.9-1.77 0-2.04 1.38-2.04 2.81V21H9z"/></svg>;
+  if (p === "github")
+    return <svg viewBox="0 0 24 24" className={cls} fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.51-1.47.11-3.06 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.77.12 3.06.74.81 1.19 1.84 1.19 3.1 0 4.44-2.7 5.41-5.27 5.69.42.36.78 1.07.78 2.16v3.2c0 .31.21.68.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>;
+  if (p === "facebook")
+    return <svg viewBox="0 0 24 24" className={cls} fill="currentColor"><path d="M13.5 21v-7h2.4l.36-3h-2.76V9.1c0-.87.24-1.46 1.5-1.46H16.4V5.04c-.28-.04-1.24-.12-2.36-.12-2.34 0-3.94 1.43-3.94 4.05V11H7.7v3h2.4v7z"/></svg>;
+  if (p === "youtube")
+    return <svg viewBox="0 0 24 24" className={cls} fill="currentColor"><path d="M23 7.2s-.22-1.56-.9-2.24c-.86-.9-1.83-.9-2.27-.96C16.7 3.75 12 3.75 12 3.75s-4.7 0-7.83.25c-.44.06-1.4.06-2.27.96C1.22 5.64 1 7.2 1 7.2S.75 9 .75 10.83v1.7c0 1.82.25 3.63.25 3.63s.22 1.56.9 2.24c.86.9 2 .88 2.5.98 1.8.17 7.6.22 7.6.22s4.7-.01 7.83-.26c.44-.06 1.4-.07 2.27-.97.67-.68.9-2.24.9-2.24s.25-1.81.25-3.63v-1.7C23.25 9 23 7.2 23 7.2zM9.75 14.6V8.4l6 3.1z"/></svg>;
+  if (p === "dribbble")
+    return <svg viewBox="0 0 24 24" className={cls} fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72M19.92 9.7c-3.45-.04-9.6-.06-13.94 1.45-2.27.78-4.18 2.06-5.62 4.07M3.71 4.96c1.43 1.87 4.62 5.51 9.06 7.36 4.43 1.85 7.31 1.94 9.66 1.43"/></svg>;
+  if (p === "behance")
+    return <svg viewBox="0 0 24 24" className={cls} fill="currentColor"><path d="M7.8 11c1.1 0 2-.5 2-1.7 0-1.3-.9-1.7-2-1.7H4v3.4zm.3 5.7c1.2 0 2.2-.4 2.2-1.9s-.8-2-2.1-2H4v3.9zM12.3 9c0-3-2.4-3.7-5-3.7H1v13.5h6.5c2.7 0 5.2-1.3 5.2-4.3 0-1.86-.9-3.25-2.7-3.7 1.4-.6 2.3-1.7 2.3-3.8zM21.5 12c-.1-1.5-.9-2.4-2.3-2.4-1.5 0-2.4 1-2.5 2.4zM14 13.3c0-3.4 2.1-5.7 5.3-5.7 3.4 0 5.2 2.4 5.2 5.6 0 .3-.02.6-.04.7H16.6c.13 1.8 1 2.6 2.5 2.6 1.1 0 1.9-.5 2.2-1.2h3c-.7 2.3-2.5 3.6-5.4 3.6-3.4 0-5.5-2.4-5.5-5.6zM15 6.5h7v1.6h-7z"/></svg>;
+  return <svg viewBox="0 0 24 24" className={cls} fill="none" stroke="currentColor" strokeWidth="2"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>;
+}
+
