@@ -250,6 +250,20 @@ function Editor({ password, onLogout }: { password: string; onLogout: () => void
           <Field label="Note" value={c.footer.note} onChange={(v) => update({ footer: { ...c.footer, note: v } })} />
         </Section>
 
+        <Section title="Social links">
+          <RepeaterField
+            label="Social profiles (platform: twitter, x, instagram, linkedin, github, facebook, youtube, dribbble, behance)"
+            items={c.social ?? []}
+            blank={{ platform: "", url: "" }}
+            fields={[
+              { key: "platform", label: "Platform" },
+              { key: "url", label: "URL" },
+            ]}
+            onChange={(items) => update({ social: items })}
+          />
+        </Section>
+
+
         <div className="flex justify-end gap-2 pb-20">
           <button disabled={busy} onClick={reset} className="text-xs uppercase tracking-wider px-4 py-2 border border-border rounded-full hover:bg-muted disabled:opacity-50">Reset</button>
           <button disabled={busy} onClick={save} className="text-xs uppercase tracking-wider px-6 py-2 bg-accent text-accent-foreground rounded-full hover:opacity-90 disabled:opacity-50">{busy ? "Saving…" : "Save changes"}</button>

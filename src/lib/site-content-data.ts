@@ -44,6 +44,8 @@ export type SiteContent = {
     tagline: string;
     note: string;
   };
+  social: { platform: string; url: string }[];
+
 };
 
 export const defaultContent: SiteContent = {
@@ -108,4 +110,11 @@ export const defaultContent: SiteContent = {
     tagline: "Independent web studio · Est. 2026",
     note: "Replies within 24h",
   },
+  social: [
+    { platform: "twitter", url: "https://twitter.com/" },
+    { platform: "instagram", url: "https://instagram.com/" },
+    { platform: "linkedin", url: "https://linkedin.com/" },
+    { platform: "github", url: "https://github.com/" },
+  ],
+
 };
