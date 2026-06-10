@@ -111,7 +111,7 @@ export const defaultContent: SiteContent = {
     note: "Replies within 24h",
   },
   social: [
-    { platform: "twitter", url: "https://twitter.com/" },
+    { platform: "whatsapp", url: "https://wa.me/" },
     { platform: "instagram", url: "https://instagram.com/" },
     { platform: "linkedin", url: "https://linkedin.com/" },
     { platform: "github", url: "https://github.com/" },
