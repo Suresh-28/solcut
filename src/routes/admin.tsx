@@ -252,7 +252,7 @@ function Editor({ password, onLogout }: { password: string; onLogout: () => void
 
         <Section title="Social links">
           <RepeaterField
-            label="Social profiles (platform: twitter, x, instagram, linkedin, github, facebook, youtube, dribbble, behance)"
+            label="Social profiles (platform: whatsapp, instagram, linkedin, github, facebook, youtube, dribbble, behance)"
             items={c.social ?? []}
             blank={{ platform: "", url: "" }}
             fields={[
