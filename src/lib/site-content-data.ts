@@ -44,6 +44,8 @@ export type SiteContent = {
     tagline: string;
     note: string;
   };
+  social: { platform: string; url: string }[];
+
 };
 
 export const defaultContent: SiteContent = {
