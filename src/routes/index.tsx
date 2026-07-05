@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform, useSpring, useInView, AnimatePresence } from "motion/react";
+import { toast } from "sonner";
 import heroShape from "@/assets/hero-shape.jpg";
 import { useLenis } from "@/hooks/use-lenis";
 import { Reveal, RevealStagger } from "@/components/reveal";
