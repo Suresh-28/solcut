@@ -494,9 +494,10 @@ function Pricing() {
             <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">
               {tier.name}
             </p>
-            <div className="mt-4 flex items-baseline gap-1">
+            <div className="mt-4 flex items-baseline gap-3">
               <span className="font-display text-5xl md:text-6xl">₹{tier.price}</span>
               <span className="text-muted-foreground text-sm">/-</span>
+              <span className="text-muted-foreground/70 text-xl line-through">₹{tier.oldPrice}</span>
             </div>
             <p className="mt-3 text-foreground/70">{tier.highlight}</p>
 
