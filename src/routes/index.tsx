@@ -430,19 +430,22 @@ const PRICING_FEATURES = [
 const PRICING_TIERS = [
   {
     name: "Single Landing Page",
-    price: "10,999",
+    price: "4,999",
+    oldPrice: "10,999",
     highlight: "Modern, responsive & conversion-focused design",
     featured: false,
   },
   {
     name: "5 Page Website",
-    price: "15,999",
+    price: "6,999",
+    oldPrice: "15,999",
     highlight: "Up to 5 unique pages for your business",
     featured: true,
   },
   {
     name: "10 Page Website",
-    price: "21,999",
+    price: "9,999",
+    oldPrice: "21,999",
     highlight: "Up to 10 unique pages for your business",
     featured: false,
   },
