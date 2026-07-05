@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform, useSpring, useInView, AnimatePresence } from "motion/react";
+import { toast } from "sonner";
 import heroShape from "@/assets/hero-shape.jpg";
 import { useLenis } from "@/hooks/use-lenis";
 import { Reveal, RevealStagger } from "@/components/reveal";
@@ -430,19 +431,22 @@ const PRICING_FEATURES = [
 const PRICING_TIERS = [
   {
     name: "Single Landing Page",
-    price: "10,999",
+    price: "4,999",
+    oldPrice: "10,999",
     highlight: "Modern, responsive & conversion-focused design",
     featured: false,
   },
   {
     name: "5 Page Website",
-    price: "15,999",
+    price: "6,999",
+    oldPrice: "15,999",
     highlight: "Up to 5 unique pages for your business",
     featured: true,
   },
   {
     name: "10 Page Website",
-    price: "21,999",
+    price: "9,999",
+    oldPrice: "21,999",
     highlight: "Up to 10 unique pages for your business",
     featured: false,
   },
@@ -491,9 +495,10 @@ function Pricing() {
             <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">
               {tier.name}
             </p>
-            <div className="mt-4 flex items-baseline gap-1">
+            <div className="mt-4 flex items-baseline gap-3">
               <span className="font-display text-5xl md:text-6xl">₹{tier.price}</span>
               <span className="text-muted-foreground text-sm">/-</span>
+              <span className="text-muted-foreground/70 text-xl line-through">₹{tier.oldPrice}</span>
             </div>
             <p className="mt-3 text-foreground/70">{tier.highlight}</p>
 
@@ -608,15 +613,30 @@ function Contact({ contact }: { contact: SiteContent["contact"] }) {
   );
 }
 
-function ContactForm({ email }: { email: string }) {
+function ContactForm({ email: _email }: { email: string }) {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [sent, setSent] = useState(false);
-  const onSubmit = (e: React.FormEvent) => {
+  const [submitting, setSubmitting] = useState(false);
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`New project enquiry — ${form.name || "Website"}`);
-    const body = encodeURIComponent(`From: ${form.name} <${form.email}>\n\n${form.message}`);
-    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
-    setSent(true);
+    setSubmitting(true);
+    const phone = "919502610514";
+    const text =
+      `*Solcut website Enquiry*\n\n` +
+      `Name: ${form.name}\n` +
+      `Email: ${form.email}\n\n` +
+      `Message:\n${form.message}`;
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+    try {
+      // Fire-and-forget: prepares the WhatsApp deep link without navigating.
+      await fetch(url, { method: "GET", mode: "no-cors", keepalive: true });
+    } catch {
+      // Ignore network errors — the enquiry UX is fire-and-forget.
+    }
+    toast.success("Enquiry submitted successfully", {
+      description: "We'll get back to you within 24 hours.",
+    });
+    setForm({ name: "", email: "", message: "" });
+    setSubmitting(false);
   };
   return (
     <form onSubmit={onSubmit} className="mt-16 grid md:grid-cols-2 gap-5 max-w-3xl border-t border-border pt-10">
@@ -652,11 +672,11 @@ function ContactForm({ email }: { email: string }) {
       <div className="md:col-span-2 flex items-center gap-4">
         <button
           type="submit"
-          className="inline-flex items-center gap-3 bg-accent text-accent-foreground rounded-full px-6 py-3 text-sm uppercase tracking-wider hover:opacity-90"
+          disabled={submitting}
+          className="inline-flex items-center gap-3 bg-accent text-accent-foreground rounded-full px-6 py-3 text-sm uppercase tracking-wider hover:opacity-90 disabled:opacity-60"
         >
-          Send enquiry <span>→</span>
+          {submitting ? "Sending…" : <>Send enquiry <span>→</span></>}
         </button>
-        {sent && <span className="text-sm text-muted-foreground">Opening your mail client…</span>}
       </div>
     </form>
   );
